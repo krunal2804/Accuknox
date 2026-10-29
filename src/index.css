@@ -1,0 +1,113 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Design tokens (BoardUI-inspired). Light is the base, .dark overrides. */
+:root {
+  --bg: #ffffff;
+  --sidebar: #fafafa;
+  --card: #f5f5f6;
+  --card-inner: #ffffff;
+  --border: #e7e7ea;
+  --fg: #0a0a0b;
+  --muted: #71717a;
+  --subtle: #a1a1aa;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-soft: #dbeafe;
+  --success-soft: #ecfccb;
+  --success-fg: #3f6212;
+  --danger-soft: #fee2e2;
+  --danger-fg: #b91c1c;
+  --ring: rgb(37 99 235 / 0.35);
+  color-scheme: light;
+}
+
+.dark {
+  --bg: #0b0b0c;
+  --sidebar: #121214;
+  --card: #161618;
+  --card-inner: #212124;
+  --border: #26262a;
+  --fg: #f4f4f5;
+  --muted: #a1a1aa;
+  --subtle: #71717a;
+  --primary: #2563eb;
+  --primary-hover: #3b82f6;
+  --primary-soft: #1e293b;
+  --success-soft: #1a2e05;
+  --success-fg: #a3e635;
+  --danger-soft: #3b0d0d;
+  --danger-fg: #f87171;
+  --ring: rgb(59 130 246 / 0.45);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --color-bg: var(--bg);
+  --color-sidebar: var(--sidebar);
+  --color-card: var(--card);
+  --color-card-inner: var(--card-inner);
+  --color-line: var(--border);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-soft: var(--primary-soft);
+  --color-success-soft: var(--success-soft);
+  --color-success-fg: var(--success-fg);
+  --color-danger-soft: var(--danger-soft);
+  --color-danger-fg: var(--danger-fg);
+  --color-ring: var(--ring);
+
+  --animate-fade-in: fade-in 150ms ease-out;
+  --animate-pop-in: pop-in 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-in-right: slide-in-right 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-in-left: slide-in-left 260ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+  }
+  @keyframes pop-in {
+    from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  }
+  @keyframes slide-in-right {
+    from { transform: translateX(100%); }
+  }
+  @keyframes slide-in-left {
+    from { transform: translateX(-100%); }
+  }
+}
+
+@layer base {
+  html,
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    transition-duration: 1ms !important;
+  }
+}

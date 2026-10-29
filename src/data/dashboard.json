@@ -1,0 +1,88 @@
+{
+  "title": "CNAPP Dashboard",
+  "categories": [
+    {
+      "id": "cspm",
+      "name": "CSPM Executive Dashboard",
+      "description": "Cloud security posture across connected accounts",
+      "widgets": [
+        {
+          "id": "cloud-accounts",
+          "name": "Cloud Accounts",
+          "type": "donut",
+          "visible": true,
+          "total": { "value": 2, "label": "Total" },
+          "data": [
+            { "label": "Connected", "value": 2, "color": "#3b82f6" },
+            { "label": "Not Connected", "value": 2, "color": "#c084fc" }
+          ]
+        },
+        {
+          "id": "cloud-account-risk",
+          "name": "Cloud Account Risk Assessment",
+          "type": "donut",
+          "visible": true,
+          "total": { "value": 9659, "label": "Total" },
+          "data": [
+            { "label": "Failed", "value": 1689, "color": "#ef4444" },
+            { "label": "Warning", "value": 681, "color": "#f59e0b" },
+            { "label": "Not available", "value": 36, "color": "#a1a1aa" },
+            { "label": "Passed", "value": 7253, "color": "#84cc16" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cwpp",
+      "name": "CWPP Dashboard",
+      "description": "Cloud workload protection alerts",
+      "widgets": [
+        {
+          "id": "namespace-alerts",
+          "name": "Top 5 Namespace Specific Alerts",
+          "type": "empty",
+          "visible": true
+        },
+        {
+          "id": "workload-alerts",
+          "name": "Workload Alerts",
+          "type": "empty",
+          "visible": true
+        }
+      ]
+    },
+    {
+      "id": "registry",
+      "name": "Registry Scan",
+      "description": "Container image vulnerabilities",
+      "widgets": [
+        {
+          "id": "image-risk",
+          "name": "Image Risk Assessment",
+          "type": "bar",
+          "visible": true,
+          "total": { "value": 1470, "label": "Total vulnerabilities" },
+          "data": [
+            { "label": "Critical", "value": 9, "color": "#ef4444" },
+            { "label": "High", "value": 150, "color": "#f472b6" },
+            { "label": "Medium", "value": 611, "color": "#f59e0b" },
+            { "label": "Low", "value": 700, "color": "#a3e635" }
+          ]
+        },
+        {
+          "id": "image-security",
+          "name": "Image Security Issues",
+          "type": "bar",
+          "visible": true,
+          "total": { "value": 2, "label": "Total images" },
+          "data": [
+            { "label": "Critical", "value": 2, "color": "#ef4444" },
+            { "label": "High", "value": 2, "color": "#f472b6" },
+            { "label": "Medium", "value": 0, "color": "#f59e0b" },
+            { "label": "Low", "value": 0, "color": "#a3e635" }
+          ]
+        }
+      ]
+    }
+  ]
+}
