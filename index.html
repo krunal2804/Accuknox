@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/accuknox-icon.png" />
@@ -9,10 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <title>AccuKnox</title>
     <script>
-      // Apply the saved theme before first paint to avoid a light/dark flash.
+      // Light is the default; apply a saved dark theme before first paint to avoid a flash.
       try {
         var saved = JSON.parse(localStorage.getItem('cnapp-theme') || 'null')
-        if (saved && saved.state && saved.state.theme === 'light') document.documentElement.classList.remove('dark')
+        if (saved && saved.state && saved.state.theme === 'dark') document.documentElement.classList.add('dark')
       } catch (e) {}
     </script>
   </head>

@@ -26,7 +26,7 @@ The dashboard is built entirely from a JSON file of **categories**, each holding
 - **Add categories** from the page header or the sidebar.
 - **Accurate totals:** chart totals are always calculated from the data.
 - **Interactive charts:** hovering a slice or legend row highlights it, and donut charts show the value in the centre.
-- **Dark / light theme:** a GitHub-style dark mode, remembered across reloads.
+- **Light / dark theme:** opens in light mode, with a GitHub-style dark mode one click away. Your choice is remembered across reloads.
 - **Responsive layout:** three columns on desktop down to one column on mobile, with a slide-in sidebar.
 - **Accessible:** keyboard-friendly dialogs (Esc to close, focus trap) and labelled buttons.
 - **Reset** button restores the original JSON data.
