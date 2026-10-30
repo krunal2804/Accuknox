@@ -1,4 +1,4 @@
-export type WidgetType = 'donut' | 'bar' | 'empty' | 'text'
+export type WidgetType = 'donut' | 'bar' | 'line' | 'empty' | 'text'
 
 export interface ChartDatum {
   label: string
@@ -13,7 +13,8 @@ export interface Widget {
   /** Unchecking a widget in the "Add Widget" drawer hides it without deleting it. */
   visible: boolean
   text?: string
-  total?: { value: number; label: string }
+  /** Label under the total; the total itself is always the sum of `data`. */
+  totalLabel?: string
   data?: ChartDatum[]
 }
 
@@ -21,6 +22,8 @@ export interface Category {
   id: string
   name: string
   description?: string
+  /** Icon name: "cloud" | "server" | "container" (anything else shows a folder). */
+  icon?: string
   widgets: Widget[]
 }
 

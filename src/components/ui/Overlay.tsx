@@ -1,5 +1,7 @@
+import { X } from 'lucide-react'
 import { useEffect, useRef, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
+import { Button } from './Button'
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
@@ -73,7 +75,7 @@ export function Overlay({ open, onClose, variant = 'dialog', labelledBy, classNa
       }`}
     >
       <div
-        className="absolute inset-0 animate-fade-in bg-black/50 backdrop-blur-[2px]"
+        className="absolute inset-0 animate-fade-in bg-gray-950/50 dark:bg-black/60"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -82,15 +84,41 @@ export function Overlay({ open, onClose, variant = 'dialog', labelledBy, classNa
         role="dialog"
         aria-modal="true"
         aria-labelledby={labelledBy}
-        className={`relative border border-line bg-bg shadow-2xl ${
+        className={`relative flex flex-col border-line bg-card shadow-2xl ${
           variant === 'drawer'
-            ? 'flex h-full w-full max-w-lg animate-slide-in-right flex-col sm:rounded-l-3xl'
-            : 'w-full max-w-md animate-pop-in rounded-3xl'
+            ? 'h-full w-full max-w-md animate-slide-in-right border-l'
+            : 'max-h-[calc(100vh-2rem)] w-full max-w-lg animate-pop-in overflow-hidden rounded-xl border'
         } ${className}`}
       >
         {children}
       </div>
     </div>,
     document.body,
+  )
+}
+
+/** Standard header row for dialogs and drawers. */
+export function OverlayHeader({ id, title, subtitle, onClose }: { id: string; title: string; subtitle?: string; onClose: () => void }) {
+  return (
+    <div className="flex items-start gap-4 border-b border-line px-6 py-4">
+      <div className="min-w-0 flex-1">
+        <h2 id={id} className="text-base font-semibold">
+          {title}
+        </h2>
+        {subtitle && <p className="mt-0.5 text-sm text-muted">{subtitle}</p>}
+      </div>
+      <Button variant="ghost" size="sm" icon aria-label="Close" onClick={onClose} className="-mr-2">
+        <X className="size-4" />
+      </Button>
+    </div>
+  )
+}
+
+/** Standard footer row (actions right-aligned). */
+export function OverlayFooter({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex items-center justify-end gap-2 border-t border-line bg-card-inner px-6 py-3">
+      {children}
+    </div>
   )
 }

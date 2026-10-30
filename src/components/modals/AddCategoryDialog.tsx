@@ -1,9 +1,8 @@
-import { X } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
 import { useDashboardStore } from '../../store/useDashboardStore'
 import { useUiStore } from '../../store/useUiStore'
 import { Button } from '../ui/Button'
-import { Overlay } from '../ui/Overlay'
+import { Overlay, OverlayFooter, OverlayHeader } from '../ui/Overlay'
 import { fieldClass, labelClass } from './formStyles'
 
 export function AddCategoryDialog() {
@@ -41,20 +40,15 @@ function AddCategoryForm({ onDone }: { onDone: () => void }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="p-6">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h2 id="add-category-title" className="text-lg font-semibold">
-            New category
-          </h2>
-          <p className="mt-1 text-sm text-muted">Categories group related widgets on the dashboard.</p>
-        </div>
-        <Button variant="ghost" icon aria-label="Close" onClick={onDone} className="-mt-1 -mr-2">
-          <X className="size-5" />
-        </Button>
-      </div>
+    <form onSubmit={handleSubmit} noValidate className="flex min-h-0 flex-col">
+      <OverlayHeader
+        id="add-category-title"
+        title="New category"
+        subtitle="Categories group related widgets on the dashboard."
+        onClose={onDone}
+      />
 
-      <div className="mt-6 grid gap-4">
+      <div className="grid gap-4 overflow-y-auto px-6 py-5">
         <label className="grid gap-1.5">
           <span className={labelClass}>
             Category name <span className="text-danger-fg">*</span>
@@ -90,12 +84,12 @@ function AddCategoryForm({ onDone }: { onDone: () => void }) {
         </label>
       </div>
 
-      <div className="mt-6 flex justify-end gap-2">
+      <OverlayFooter>
         <Button onClick={onDone}>Cancel</Button>
         <Button type="submit" variant="primary">
           Create category
         </Button>
-      </div>
+      </OverlayFooter>
     </form>
   )
 }

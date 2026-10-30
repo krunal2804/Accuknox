@@ -2,11 +2,10 @@ import { ChartNoAxesColumn } from 'lucide-react'
 
 export function EmptyWidget() {
   return (
-    <div className="flex flex-1 flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-line py-6 text-center">
-      <span className="grid size-11 place-items-center rounded-xl bg-card-inner text-subtle">
-        <ChartNoAxesColumn className="size-5" aria-hidden="true" />
-      </span>
-      <p className="text-sm text-muted">No graph data available!</p>
+    <div className="flex flex-1 flex-col items-center justify-center gap-1.5 text-center">
+      <ChartNoAxesColumn className="mb-1 size-7 text-subtle" strokeWidth={1.5} aria-hidden="true" />
+      <p className="text-sm font-medium">No graph data available</p>
+      <p className="text-xs text-subtle">Data appears once a source is connected.</p>
     </div>
   )
 }

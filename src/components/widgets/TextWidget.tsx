@@ -1,9 +1,8 @@
 import type { Widget } from '../../types'
+import { EmptyWidget } from './EmptyWidget'
 
 export function TextWidget({ widget }: { widget: Widget }) {
-  return (
-    <div className="flex flex-1 rounded-xl bg-card-inner p-4">
-      <p className="text-sm leading-relaxed whitespace-pre-line text-muted">{widget.text}</p>
-    </div>
-  )
+  if (!widget.text) return <EmptyWidget />
+
+  return <p className="text-sm leading-relaxed whitespace-pre-line text-muted">{widget.text}</p>
 }

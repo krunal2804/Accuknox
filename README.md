@@ -1,77 +1,128 @@
-# CNAPP Dashboard
+# AccuKnox CNAPP Dashboard
 
-A dynamic, JSON-driven security dashboard built for the **Frontend Trainee Assignment**.
-Categories and widgets are loaded from a JSON file, and users can add, remove, hide and search widgets (and add categories) — all managed in a Zustand store.
-The visual style (dark / light themes, rounded cards, sidebar layout, lime/blue/purple/pink chart palette) is inspired by the BoardUI marketing template.
+A dynamic, JSON-driven security dashboard built with React for the **AccuKnox Frontend Trainee Assignment**.
 
-## Tech stack
+**Live demo:** https://krunal2804.github.io/Accuknox/
 
-| Purpose          | Library                                   |
-| ---------------- | ----------------------------------------- |
-| UI               | React 19 + TypeScript                     |
-| Build tool       | Vite                                      |
-| State management | Zustand (theme persisted to localStorage) |
-| Styling          | Tailwind CSS v4                           |
-| Charts           | Recharts                                  |
-| Icons            | lucide-react                              |
+The dashboard is built entirely from a JSON file of **categories**, each holding several **widgets**. You can add, edit, remove, hide and search widgets, and create new categories. All of it is managed locally with a Zustand store.
 
-## Run locally
+## Features
 
-Prerequisites: **Node.js 20.19+ (or 22.12+)** and npm.
+### Assignment requirements
+
+| # | Requirement | How it works |
+|---|-------------|--------------|
+| 1 | Build the dashboard from JSON (categories → widgets) | `src/data/dashboard.json` defines every category and widget, and the UI renders whatever is in it |
+| 2 | Add / remove widgets in a category | Zustand store actions `addWidget` and `removeWidget` |
+| 3 | Widgets show text | Text widgets show the text you enter. Without text they show a "No graph data available" state |
+| 4 | **+ Add Widget** → name + text → added to that category | Each category has a dashed **Add Widget** card that opens a form with the category preselected |
+| 5 | ✕ removes a widget, or uncheck it in the category list | ✕ on every widget. **Add widget** / **Manage** opens a drawer with a tab per category, where unchecking + **Confirm** hides widgets |
+| 6 | Search all widgets | Search box in the top bar (or **Ctrl / Cmd + K**) searches every widget, including hidden ones |
+
+### Extras
+
+- **Widget types:** Text, Donut, Bar and Line charts. Chart widgets have an editable data table with custom colours.
+- **Edit widgets:** the ✏️ icon changes the name, text, type or data, or moves a widget to another category.
+- **Add categories** from the page header or the sidebar.
+- **Accurate totals:** chart totals are always calculated from the data.
+- **Interactive charts:** hovering a slice or legend row highlights it, and donut charts show the value in the centre.
+- **Dark / light theme:** a GitHub-style dark mode, remembered across reloads.
+- **Responsive layout:** three columns on desktop down to one column on mobile, with a slide-in sidebar.
+- **Accessible:** keyboard-friendly dialogs (Esc to close, focus trap) and labelled buttons.
+- **Reset** button restores the original JSON data.
+
+## Technologies
+
+| Purpose | Technology |
+|---------|------------|
+| UI library | [React 19](https://react.dev) + [TypeScript](https://www.typescriptlang.org) |
+| Build tool / dev server | [Vite](https://vite.dev) |
+| State management | [Zustand](https://zustand.docs.pmnd.rs) (the theme is persisted to localStorage) |
+| Styling | [Tailwind CSS v4](https://tailwindcss.com) with CSS design tokens for both themes |
+| Charts | [Recharts](https://recharts.org) |
+| Icons | [lucide-react](https://lucide.dev) |
+| Linting | [oxlint](https://oxc.rs) |
+| Hosting | GitHub Pages, deployed by GitHub Actions |
+
+## Getting started
+
+### Prerequisites
+
+- **Node.js 20.19+** (or 22.12+). Check with `node -v`
+- **npm** (comes with Node.js)
+- **Git**
+
+### Run locally
 
 ```bash
-# 1. Go into the project folder
-cd cnapp-dashboard
+# 1. Clone the repository
+git clone https://github.com/krunal2804/Accuknox.git
 
-# 2. Install dependencies
+# 2. Go into the project folder
+cd Accuknox
+
+# 3. Install dependencies
 npm install
 
-# 3. Start the dev server
+# 4. Start the development server
 npm run dev
 ```
 
-Open **http://localhost:5173** in your browser.
+Then open **http://localhost:5173** in your browser.
 
-Other scripts:
+### Available scripts
 
-```bash
-npm run build     # type-check and build for production into dist/
-npm run preview   # serve the production build locally
-```
+| Command | What it does |
+|---------|--------------|
+| `npm run dev` | Starts the dev server with hot reload |
+| `npm run build` | Type-checks and builds a production version into `dist/` |
+| `npm run preview` | Serves the production build locally |
+| `npm run lint` | Lints the code with oxlint |
 
-## Features (mapped to the assignment)
+## How to use the dashboard
 
-| # | Requirement | Where |
-|---|-------------|-------|
-| 1 | Build the dashboard from JSON with categories → widgets | `src/data/dashboard.json`, loaded by `src/store/useDashboardStore.ts` |
-| 2 | Add / remove widgets in a category | Zustand actions `addWidget`, `removeWidget` |
-| 3 | Widgets show random text | Custom widgets show the text entered, or random placeholder text if left empty. Preset widgets render charts from their JSON data |
-| 4 | "+ Add Widget" → enter name and text → added to that category | Dashed **Add Widget** card in each category opens `AddWidgetDialog` with the category preselected |
-| 5 | ✕ icon removes a widget, or uncheck it in the category list | ✕ on each card (hover on desktop). Header **Add Widget** opens the side drawer with a tab per category: uncheck → **Confirm** hides the widget |
-| 6 | Search all widgets | Header search (or **Ctrl/Cmd + K**) filters every widget, including hidden ones, by name, text or category |
+1. **Browse:** the dashboard has three categories (CSPM, CWPP, Registry Scan). Use the sidebar to jump to one.
+2. **Add a widget:** click the dashed **+ Add Widget** card in a category. Pick a type (Text, Donut, Bar or Line), enter a name, and for charts edit the data rows. Then click **Add widget**.
+3. **Edit a widget:** click the ✏️ icon on any widget, change what you need, then click **Save changes**.
+4. **Remove a widget:** click the ✕ icon on the widget.
+5. **Show / hide widgets:** click **Add widget** in the page header (or **Manage** on a category). Pick a category tab, tick or untick widgets, then click **Confirm**.
+6. **Search:** type in the top-bar search (or press **Ctrl + K**). Results include hidden widgets, which you can show again from there.
+7. **Add a category:** click **Add category** in the page header or **New category** in the sidebar.
+8. **Theme:** switch between light and dark mode with the sun / moon icon in the top bar.
+9. **Reset:** the ↺ button restores the original data from `dashboard.json`.
 
-Extras: dark / light theme toggle (remembered across reloads), sidebar that jumps to each category, **Add category**, dashboard summary stats, **Reset** to the original JSON, responsive layout down to mobile, keyboard-accessible modals (Esc to close, focus trap).
+> Widget changes are kept **in memory**, as the assignment asks ("add / remove widget locally"). Refreshing the page restores the JSON defaults.
 
 ## Project structure
 
 ```
-src/
-  data/dashboard.json            # Dashboard definition (categories → widgets)
-  types.ts                       # Category / Widget types
-  store/
-    useDashboardStore.ts         # Categories, widgets, search query + actions
-    useThemeStore.ts             # Light / dark theme (persisted)
-    useUiStore.ts                # Which drawer / dialog is open
-  components/
-    layout/      Sidebar, Header
-    dashboard/   CategorySection, WidgetCard, StatsRow, SearchResults
-    widgets/     DonutWidget, StackedBarWidget, EmptyWidget, TextWidget
-    modals/      ManageWidgetsDrawer, AddWidgetDialog, AddCategoryDialog
-    ui/          Button, Overlay (shared modal shell)
-  App.tsx, main.tsx, index.css   # App shell, theme tokens
+├── .github/workflows/deploy.yml   # Builds and publishes the site to GitHub Pages
+├── public/                        # Logos and favicon
+├── src/
+│   ├── data/dashboard.json        # Dashboard definition (categories → widgets)
+│   ├── types.ts                   # Category / Widget TypeScript types
+│   ├── store/
+│   │   ├── useDashboardStore.ts   # Categories, widgets, search + actions
+│   │   ├── useThemeStore.ts       # Light / dark theme (persisted)
+│   │   └── useUiStore.ts          # Which drawer / dialog is open
+│   ├── components/
+│   │   ├── layout/                # Sidebar, TopBar, ProfileMenu, PageHeader, SearchInput
+│   │   ├── dashboard/             # CategorySection, WidgetCard, SearchResults
+│   │   ├── widgets/               # DonutWidget, StackedBarWidget, LineWidget, EmptyWidget, TextWidget
+│   │   ├── modals/                # WidgetDialog (add + edit), ManageWidgetsDrawer, AddCategoryDialog
+│   │   └── ui/                    # Button, Overlay (modal shell), CategoryIcon
+│   ├── lib/                       # Shared helpers (accent colours, icons, popover hook)
+│   ├── App.tsx                    # App shell
+│   ├── main.tsx                   # Entry point
+│   └── index.css                  # Tailwind + light / dark design tokens
+├── index.html
+├── package.json
+└── vite.config.ts
 ```
 
-## JSON format
+## Dashboard JSON format
+
+`src/data/dashboard.json` drives the whole dashboard:
 
 ```jsonc
 {
@@ -80,16 +131,19 @@ src/
     {
       "id": "cspm",
       "name": "CSPM Executive Dashboard",
-      "description": "optional",
+      "description": "Cloud security posture across connected accounts",
+      "icon": "cloud",                // "cloud" | "server" | "container" (anything else shows a folder)
       "widgets": [
         {
           "id": "cloud-accounts",
           "name": "Cloud Accounts",
-          "type": "donut",          // "donut" | "bar" | "empty" | "text"
-          "visible": true,          // false = hidden via the drawer
-          "total": { "value": 2, "label": "Total" },
-          "data": [{ "label": "Connected", "value": 2, "color": "#3b82f6" }],
-          "text": "used by text widgets"
+          "type": "donut",            // "donut" | "bar" | "line" | "text" | "empty"
+          "visible": true,            // false = hidden (can be shown again from the drawer)
+          "totalLabel": "Total",      // the total value is always the sum of the data
+          "data": [
+            { "label": "Connected", "value": 2, "color": "#3b82f6" },
+            { "label": "Not Connected", "value": 2, "color": "#c084fc" }
+          ]
         }
       ]
     }
@@ -97,15 +151,30 @@ src/
 }
 ```
 
-To add, change or remove widgets or categories, edit `src/data/dashboard.json`. The dashboard renders whatever is there.
+Edit this file to add, change or remove categories and widgets. No code changes are needed.
 
-## Store actions (`useDashboardStore`)
+## State management
 
-- `addWidget(categoryId, { name, text })` adds a text widget to a category.
-- `removeWidget(categoryId, widgetId)` deletes a widget (the ✕ button).
-- `setWidgetVisibility({ [widgetId]: boolean })` shows or hides widgets (the drawer checkboxes).
-- `addCategory(name, description?)` creates an empty category.
-- `setSearchQuery(query)` filters widgets.
-- `resetDashboard()` restores the original JSON.
+All dashboard state lives in one Zustand store (`src/store/useDashboardStore.ts`):
 
-Widget changes are kept in memory, as the assignment asks ("add widget and remove widget locally"). A page refresh restores the JSON defaults.
+| Action | Purpose |
+|--------|---------|
+| `addWidget(categoryId, input)` | Adds a text, donut, bar or line widget |
+| `updateWidget(widgetId, toCategoryId, input)` | Edits a widget and can move it to another category |
+| `removeWidget(categoryId, widgetId)` | Deletes a widget (✕ button) |
+| `setWidgetVisibility({ [widgetId]: boolean })` | Shows or hides widgets (drawer checkboxes) |
+| `addCategory(name, description?)` | Creates a new, empty category |
+| `setSearchQuery(query)` | Filters widgets by name, text or category |
+| `resetDashboard()` | Restores the original JSON data |
+
+## Deployment
+
+Every push to `main` runs the **Deploy to GitHub Pages** workflow (`.github/workflows/deploy.yml`). It installs dependencies, builds the app, and publishes `dist/` to the `gh-pages` branch, which GitHub Pages serves at https://krunal2804.github.io/Accuknox/.
+
+If the site isn't live after the first run, open the repository's **Settings → Pages** and set **Source** to **Deploy from a branch**, branch **`gh-pages`**, folder **`/ (root)`**.
+
+## Author
+
+**Krunal Parikh**: [krunalparikh08@gmail.com](mailto:krunalparikh08@gmail.com)
+
+© 2026 Krunal Parikh. All rights reserved.

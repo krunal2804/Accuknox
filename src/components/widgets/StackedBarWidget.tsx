@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { Widget } from '../../types'
 
 const formatNumber = (n: number) => n.toLocaleString('en-US')
@@ -5,17 +6,21 @@ const formatNumber = (n: number) => n.toLocaleString('en-US')
 export function StackedBarWidget({ widget }: { widget: Widget }) {
   const data = widget.data ?? []
   const sum = data.reduce((acc, d) => acc + d.value, 0)
-  const total = widget.total ?? { value: sum, label: 'Total' }
+  const total = { value: sum, label: widget.totalLabel ?? 'Total' }
+  // Hovering a segment or legend row highlights the pair.
+  const [active, setActive] = useState<string | null>(null)
 
   return (
-    <div className="flex flex-1 flex-col justify-center gap-5">
+    <div className="flex flex-1 flex-col justify-center gap-3" onMouseLeave={() => setActive(null)}>
       <p className="flex items-baseline gap-2">
-        <span className="text-3xl font-semibold tracking-tight">{formatNumber(total.value)}</span>
-        <span className="text-sm text-muted">{total.label}</span>
+        <span className="text-2xl leading-none font-semibold tracking-tight tabular-nums">
+          {formatNumber(total.value)}
+        </span>
+        <span className="text-[13px] text-muted">{total.label}</span>
       </p>
 
       <div
-        className="flex h-4 w-full gap-1 overflow-hidden rounded-full bg-card-inner"
+        className="flex h-2.5 w-full gap-0.5 overflow-hidden rounded-full bg-card-inner"
         role="img"
         aria-label={data.map((d) => `${d.label} ${d.value}`).join(', ')}
       >
@@ -24,19 +29,32 @@ export function StackedBarWidget({ widget }: { widget: Widget }) {
           .map((d) => (
             <div
               key={d.label}
-              className="h-full rounded-full transition-[width] duration-500"
-              style={{ width: `${(d.value / sum) * 100}%`, minWidth: 8, backgroundColor: d.color }}
-              title={`${d.label}: ${formatNumber(d.value)}`}
+              onMouseEnter={() => setActive(d.label)}
+              className="h-full cursor-pointer transition-opacity first:rounded-l-full last:rounded-r-full"
+              style={{
+                width: `${(d.value / sum) * 100}%`,
+                minWidth: 6,
+                backgroundColor: d.color,
+                opacity: active === null || active === d.label ? 1 : 0.3,
+              }}
             />
           ))}
       </div>
 
-      <ul className="grid grid-cols-2 gap-2">
+      <ul className="grid grid-cols-2 gap-x-4 gap-y-0.5 text-[13px]">
         {data.map((d) => (
-          <li key={d.label} className="flex items-center gap-2.5 rounded-lg bg-card-inner px-3 py-2 text-sm">
-            <span className="size-2.5 shrink-0 rounded-[3px]" style={{ backgroundColor: d.color }} />
-            <span className="flex-1 truncate text-muted">{d.label}</span>
-            <span className="font-semibold tabular-nums">{formatNumber(d.value)}</span>
+          <li
+            key={d.label}
+            onMouseEnter={() => setActive(d.label)}
+            className={`flex items-center gap-2 rounded px-1.5 py-0.5 transition-colors ${
+              active === d.label ? 'bg-card-inner' : ''
+            }`}
+          >
+            <span className="size-2.5 shrink-0 rounded-sm" style={{ backgroundColor: d.color }} />
+            <span className={`min-w-0 flex-1 truncate ${active === d.label ? 'text-fg' : 'text-muted'}`}>
+              {d.label}
+            </span>
+            <span className="font-medium tabular-nums">{formatNumber(d.value)}</span>
           </li>
         ))}
       </ul>

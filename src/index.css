@@ -2,44 +2,57 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Design tokens (BoardUI-inspired). Light is the base, .dark overrides. */
+/* Design tokens. Light is the base, .dark overrides. Accent palette: blue / lime / purple / pink. */
 :root {
   --bg: #ffffff;
-  --sidebar: #fafafa;
-  --card: #f5f5f6;
-  --card-inner: #ffffff;
-  --border: #e7e7ea;
-  --fg: #0a0a0b;
-  --muted: #71717a;
-  --subtle: #a1a1aa;
+  --sidebar: #ffffff;
+  --card: #ffffff;
+  --raised: #ffffff;
+  --card-inner: #f8f9fb;
+  --border: #e4e7ec;
+  --fg: #101828;
+  --muted: #5d6679;
+  --subtle: #98a2b3;
   --primary: #2563eb;
   --primary-hover: #1d4ed8;
-  --primary-soft: #dbeafe;
+  --primary-soft: #eef3ff;
+  --primary-strong: #1d4ed8;
   --success-soft: #ecfccb;
   --success-fg: #3f6212;
-  --danger-soft: #fee2e2;
-  --danger-fg: #b91c1c;
-  --ring: rgb(37 99 235 / 0.35);
+  --danger-soft: #fee4e2;
+  --danger-fg: #b42318;
+  --ring: rgb(37 99 235 / 0.25);
+  --accent-blue: #3b82f6;
+  --accent-lime: #84cc16;
+  --accent-purple: #a855f7;
+  --accent-pink: #ec4899;
   color-scheme: light;
 }
 
 .dark {
-  --bg: #0b0b0c;
-  --sidebar: #121214;
-  --card: #161618;
-  --card-inner: #212124;
-  --border: #26262a;
-  --fg: #f4f4f5;
-  --muted: #a1a1aa;
-  --subtle: #71717a;
+  /* GitHub-dark palette: near-black frame (sidebar + top bar), slate canvas, lighter panels and cards. */
+  --bg: #0d1117;
+  --sidebar: #010409;
+  --card: #151b23;
+  --raised: #1c232d;
+  --card-inner: #262c36;
+  --border: #2f3742;
+  --fg: #e6edf3;
+  --muted: #9198a1;
+  --subtle: #6e7681;
   --primary: #2563eb;
   --primary-hover: #3b82f6;
-  --primary-soft: #1e293b;
-  --success-soft: #1a2e05;
+  --primary-soft: #1a2a42;
+  --primary-strong: #6cb6ff;
+  --success-soft: #142b1c;
   --success-fg: #a3e635;
-  --danger-soft: #3b0d0d;
-  --danger-fg: #f87171;
-  --ring: rgb(59 130 246 / 0.45);
+  --danger-soft: #2d1619;
+  --danger-fg: #ff7b72;
+  --ring: rgb(59 130 246 / 0.4);
+  --accent-blue: #3b82f6;
+  --accent-lime: #a3e635;
+  --accent-purple: #c084fc;
+  --accent-pink: #f472b6;
   color-scheme: dark;
 }
 
@@ -48,6 +61,7 @@
   --color-bg: var(--bg);
   --color-sidebar: var(--sidebar);
   --color-card: var(--card);
+  --color-raised: var(--raised);
   --color-card-inner: var(--card-inner);
   --color-line: var(--border);
   --color-fg: var(--fg);
@@ -56,28 +70,29 @@
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-soft: var(--primary-soft);
+  --color-primary-strong: var(--primary-strong);
   --color-success-soft: var(--success-soft);
   --color-success-fg: var(--success-fg);
   --color-danger-soft: var(--danger-soft);
   --color-danger-fg: var(--danger-fg);
   --color-ring: var(--ring);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-lime: var(--accent-lime);
+  --color-accent-purple: var(--accent-purple);
+  --color-accent-pink: var(--accent-pink);
 
   --animate-fade-in: fade-in 150ms ease-out;
   --animate-pop-in: pop-in 180ms cubic-bezier(0.16, 1, 0.3, 1);
-  --animate-slide-in-right: slide-in-right 260ms cubic-bezier(0.16, 1, 0.3, 1);
-  --animate-slide-in-left: slide-in-left 260ms cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-slide-in-right: slide-in-right 240ms cubic-bezier(0.16, 1, 0.3, 1);
 
   @keyframes fade-in {
     from { opacity: 0; }
   }
   @keyframes pop-in {
-    from { opacity: 0; transform: translateY(8px) scale(0.98); }
+    from { opacity: 0; transform: translateY(6px) scale(0.99); }
   }
   @keyframes slide-in-right {
     from { transform: translateX(100%); }
-  }
-  @keyframes slide-in-left {
-    from { transform: translateX(-100%); }
   }
 }
 
@@ -90,6 +105,7 @@
 
   body {
     font-family: var(--font-sans);
+    font-feature-settings: 'cv11', 'ss01';
     -webkit-font-smoothing: antialiased;
   }
 

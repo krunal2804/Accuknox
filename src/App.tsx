@@ -2,16 +2,18 @@ import { FolderPlus } from 'lucide-react'
 import { useEffect } from 'react'
 import { CategorySection } from './components/dashboard/CategorySection'
 import { SearchResults } from './components/dashboard/SearchResults'
-import { StatsRow } from './components/dashboard/StatsRow'
-import { Header } from './components/layout/Header'
+import { PageHeader } from './components/layout/PageHeader'
 import { Sidebar } from './components/layout/Sidebar'
+import { TopBar } from './components/layout/TopBar'
 import { AddCategoryDialog } from './components/modals/AddCategoryDialog'
-import { AddWidgetDialog } from './components/modals/AddWidgetDialog'
 import { ManageWidgetsDrawer } from './components/modals/ManageWidgetsDrawer'
+import { WidgetDialog } from './components/modals/WidgetDialog'
 import { Button } from './components/ui/Button'
 import { useDashboardStore } from './store/useDashboardStore'
 import { useThemeStore } from './store/useThemeStore'
 import { useUiStore } from './store/useUiStore'
+
+const YEAR = new Date().getFullYear()
 
 export default function App() {
   const theme = useThemeStore((s) => s.theme)
@@ -27,32 +29,39 @@ export default function App() {
     <div className="flex min-h-screen bg-bg text-fg">
       <Sidebar />
 
-      <main className="flex min-w-0 flex-1 flex-col gap-8 px-4 py-5 sm:px-6 lg:py-6 lg:pr-8 lg:pl-3">
-        <Header />
+      <div className="flex min-w-0 flex-1 flex-col">
+        <TopBar />
 
-        {searching ? (
-          <SearchResults />
-        ) : (
-          <>
-            <StatsRow />
-            {categories.map((category) => (
-              <CategorySection key={category.id} category={category} />
-            ))}
-            {categories.length === 0 && (
-              <div className="flex flex-col items-center gap-3 rounded-3xl border border-dashed border-line py-16">
-                <p className="text-sm text-muted">No categories yet.</p>
-                <Button variant="primary" onClick={() => setAddCategoryOpen(true)}>
-                  <FolderPlus className="size-[18px]" aria-hidden="true" />
-                  Create a category
-                </Button>
-              </div>
-            )}
-          </>
-        )}
-      </main>
+        <main className="mx-auto flex w-full max-w-[1600px] flex-1 flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+          <PageHeader />
+
+          {searching ? (
+            <SearchResults />
+          ) : (
+            <>
+              {categories.map((category, index) => (
+                <CategorySection key={category.id} category={category} index={index} />
+              ))}
+              {categories.length === 0 && (
+                <div className="flex flex-col items-center gap-3 rounded-lg border border-dashed border-line bg-card py-16">
+                  <p className="text-sm text-muted">No categories yet.</p>
+                  <Button variant="primary" onClick={() => setAddCategoryOpen(true)}>
+                    <FolderPlus className="size-4" aria-hidden="true" />
+                    Create a category
+                  </Button>
+                </div>
+              )}
+            </>
+          )}
+        </main>
+
+        <footer className="border-t border-line px-4 py-4 text-xs text-subtle sm:px-6 lg:px-8">
+          © {YEAR} Krunal Parikh. All rights reserved.
+        </footer>
+      </div>
 
       <ManageWidgetsDrawer />
-      <AddWidgetDialog />
+      <WidgetDialog />
       <AddCategoryDialog />
     </div>
   )

@@ -1,8 +1,11 @@
-import { Eye, X } from 'lucide-react'
+import { Eye, Pencil, X } from 'lucide-react'
 import { useDashboardStore } from '../../store/useDashboardStore'
+import { useUiStore } from '../../store/useUiStore'
 import type { Widget } from '../../types'
+import { Button } from '../ui/Button'
 import { DonutWidget } from '../widgets/DonutWidget'
 import { EmptyWidget } from '../widgets/EmptyWidget'
+import { LineWidget } from '../widgets/LineWidget'
 import { StackedBarWidget } from '../widgets/StackedBarWidget'
 import { TextWidget } from '../widgets/TextWidget'
 
@@ -12,6 +15,8 @@ function WidgetBody({ widget }: { widget: Widget }) {
       return <DonutWidget widget={widget} />
     case 'bar':
       return <StackedBarWidget widget={widget} />
+    case 'line':
+      return <LineWidget widget={widget} />
     case 'empty':
       return <EmptyWidget />
     case 'text':
@@ -29,55 +34,68 @@ interface WidgetCardProps {
 export function WidgetCard({ categoryId, widget, categoryName }: WidgetCardProps) {
   const removeWidget = useDashboardStore((s) => s.removeWidget)
   const setWidgetVisibility = useDashboardStore((s) => s.setWidgetVisibility)
+  const openEditWidget = useUiStore((s) => s.openEditWidget)
 
   return (
     <article
-      className={`group relative flex min-h-64 flex-col gap-4 rounded-3xl border border-line bg-card p-5 ${
-        widget.visible ? '' : 'opacity-60'
+      className={`flex min-h-48 flex-col rounded-lg border border-line bg-raised shadow-xs ${
+        widget.visible ? '' : 'opacity-70'
       }`}
       aria-label={widget.name}
     >
-      <header className="flex items-start gap-3 pr-8">
-        <div className="min-w-0">
-          <h3 className="text-[15px] font-semibold">{widget.name}</h3>
-          {(categoryName || !widget.visible) && (
-            <div className="mt-1.5 flex flex-wrap gap-1.5">
-              {categoryName && (
-                <span className="rounded-md bg-primary-soft px-2 py-0.5 text-xs font-medium text-primary dark:text-blue-300">
-                  {categoryName}
-                </span>
-              )}
-              {!widget.visible && (
-                <span className="rounded-md bg-card-inner px-2 py-0.5 text-xs font-medium text-muted">
-                  Hidden
-                </span>
-              )}
-            </div>
-          )}
-        </div>
+      <header className="flex items-center gap-2 py-2 pr-2 pl-4">
+        <h3 className="min-w-0 flex-1 truncate text-sm font-semibold" title={widget.name}>
+          {widget.name}
+        </h3>
+        {categoryName && (
+          <span className="shrink-0 rounded bg-primary-soft px-1.5 py-0.5 text-[11px] font-medium text-primary-strong max-sm:hidden">
+            {categoryName}
+          </span>
+        )}
+        {!widget.visible && (
+          <span className="shrink-0 rounded bg-card-inner px-1.5 py-0.5 text-[11px] font-medium text-muted">
+            Hidden
+          </span>
+        )}
+        <Button
+          variant="ghost"
+          size="sm"
+          icon
+          aria-label={`Edit ${widget.name}`}
+          title="Edit widget"
+          onClick={() => openEditWidget(categoryId, widget.id)}
+          className="-mr-1.5 text-subtle hover:text-fg"
+        >
+          <Pencil className="size-3.5" />
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          icon
+          aria-label={`Remove ${widget.name}`}
+          title="Remove widget"
+          onClick={() => removeWidget(categoryId, widget.id)}
+          className="text-subtle hover:bg-danger-soft hover:text-danger-fg"
+        >
+          <X className="size-4" />
+        </Button>
       </header>
 
-      <button
-        type="button"
-        aria-label={`Remove ${widget.name}`}
-        title="Remove widget"
-        onClick={() => removeWidget(categoryId, widget.id)}
-        className="absolute top-4 right-4 grid size-8 place-items-center rounded-lg text-muted transition hover:bg-danger-soft hover:text-danger-fg focus-visible:opacity-100 lg:opacity-0 lg:group-hover:opacity-100"
-      >
-        <X className="size-4" />
-      </button>
-
-      <WidgetBody widget={widget} />
+      <div className="flex flex-1 flex-col px-4 pb-4">
+        {/* Chart widgets can carry an optional description; text widgets render their text as the body. */}
+        {widget.type !== 'text' && widget.text && (
+          <p className="-mt-1 mb-3 line-clamp-2 text-xs text-muted">{widget.text}</p>
+        )}
+        <WidgetBody widget={widget} />
+      </div>
 
       {!widget.visible && (
-        <button
-          type="button"
-          onClick={() => setWidgetVisibility({ [widget.id]: true })}
-          className="inline-flex items-center justify-center gap-2 self-start rounded-lg bg-card-inner px-3 py-1.5 text-sm font-medium hover:text-primary"
-        >
-          <Eye className="size-4" aria-hidden="true" />
-          Show on dashboard
-        </button>
+        <div className="border-t border-line px-4 py-2.5">
+          <Button size="sm" onClick={() => setWidgetVisibility({ [widget.id]: true })}>
+            <Eye className="size-3.5" aria-hidden="true" />
+            Show on dashboard
+          </Button>
+        </div>
       )}
     </article>
   )

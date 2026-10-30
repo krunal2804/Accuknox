@@ -1,6 +1,7 @@
 import { SearchX } from 'lucide-react'
 import { useMemo } from 'react'
 import { useDashboardStore } from '../../store/useDashboardStore'
+import { Button } from '../ui/Button'
 import { WidgetCard } from './WidgetCard'
 
 /** Searches every widget (including hidden ones) by name, text and category. */
@@ -21,30 +22,27 @@ export function SearchResults() {
   }, [categories, query])
 
   return (
-    <section aria-live="polite">
-      <div className="mb-3 flex items-baseline gap-2">
-        <h2 className="text-lg font-semibold tracking-tight">Search results</h2>
-        <span className="text-sm text-muted">
+    <section aria-live="polite" className="rounded-lg border border-line bg-card shadow-xs">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-line px-5 py-4">
+        <h2 className="text-[15px] font-semibold">Search results</h2>
+        <span className="text-[13px] text-muted">
           {results.length} widget{results.length === 1 ? '' : 's'} matching “{query.trim()}”
         </span>
+        <Button size="sm" variant="ghost" onClick={() => setSearchQuery('')} className="ml-auto">
+          Clear search
+        </Button>
       </div>
 
       {results.length === 0 ? (
-        <div className="flex flex-col items-center gap-3 rounded-3xl border border-dashed border-line py-16 text-center">
-          <span className="grid size-12 place-items-center rounded-xl bg-card text-muted">
-            <SearchX className="size-6" aria-hidden="true" />
+        <div className="flex flex-col items-center gap-2 py-16 text-center">
+          <span className="mb-1 grid size-10 place-items-center rounded-md border border-line bg-card-inner text-subtle">
+            <SearchX className="size-5" aria-hidden="true" />
           </span>
-          <p className="text-sm text-muted">No widgets found. Try another name.</p>
-          <button
-            type="button"
-            onClick={() => setSearchQuery('')}
-            className="text-sm font-medium text-primary hover:underline"
-          >
-            Clear search
-          </button>
+          <p className="text-sm font-medium">No widgets found</p>
+          <p className="text-xs text-subtle">Try a different widget or category name.</p>
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-4 p-4 sm:p-5 md:grid-cols-2 xl:grid-cols-3">
           {results.map(({ category, widget }) => (
             <WidgetCard key={widget.id} categoryId={category.id} widget={widget} categoryName={category.name} />
           ))}
