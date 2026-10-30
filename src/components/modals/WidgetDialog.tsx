@@ -141,7 +141,7 @@ function WidgetForm({ target, widget, onDone }: WidgetFormProps) {
         onClose={onDone}
       />
 
-      <div className="grid gap-4 overflow-y-auto px-6 py-5">
+      <div className="grid grid-cols-1 gap-4 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5">
         <label className="grid gap-1.5">
           <span className={labelClass}>Category</span>
           <select value={categoryId} onChange={(e) => setCategoryId(e.target.value)} className={fieldClass}>
@@ -153,9 +153,9 @@ function WidgetForm({ target, widget, onDone }: WidgetFormProps) {
           </select>
         </label>
 
-        <fieldset className="grid gap-1.5">
+        <fieldset className="grid min-w-0 grid-cols-1 gap-1.5">
           <legend className={`${labelClass} mb-1.5`}>Widget type</legend>
-          <div className="grid grid-cols-4 gap-2" role="radiogroup">
+          <div className="grid grid-cols-4 gap-1.5 sm:gap-2" role="radiogroup">
             {TYPES.map(({ value, label, icon: Icon }) => {
               const selected = type === value
               return (
@@ -165,7 +165,7 @@ function WidgetForm({ target, widget, onDone }: WidgetFormProps) {
                   role="radio"
                   aria-checked={selected}
                   onClick={() => changeType(value)}
-                  className={`flex flex-col items-center gap-1.5 rounded-md border px-2 py-2.5 text-xs font-medium transition-colors ${
+                  className={`flex min-w-0 flex-col items-center gap-1.5 rounded-md border px-1 py-2.5 text-xs font-medium transition-colors ${
                     selected
                       ? 'border-primary bg-primary-soft text-primary-strong'
                       : 'border-line text-muted hover:bg-card-inner hover:text-fg'
@@ -204,13 +204,13 @@ function WidgetForm({ target, widget, onDone }: WidgetFormProps) {
         </label>
 
         {isChart && (
-          <fieldset className="grid gap-2">
+          <fieldset className="grid min-w-0 grid-cols-1 gap-2">
             <legend className={`${labelClass} mb-1.5`}>
               Data{' '}
               <span className="font-normal text-subtle">({type === 'line' ? 'x-axis label' : 'segment'}, value)</span>
             </legend>
             {rows.map((row, i) => (
-              <div key={i} className="flex items-center gap-2">
+              <div key={i} className="flex items-center gap-1.5 sm:gap-2">
                 {type === 'line' ? (
                   <span className="w-6 text-center text-xs text-subtle tabular-nums">{i + 1}</span>
                 ) : (
@@ -244,7 +244,7 @@ function WidgetForm({ target, widget, onDone }: WidgetFormProps) {
                   value={row.value}
                   onChange={(e) => updateRow(i, { value: e.target.value })}
                   placeholder="0"
-                  className={`${fieldBase} w-24 shrink-0 tabular-nums`}
+                  className={`${fieldBase} w-20 shrink-0 px-2.5 tabular-nums sm:w-24 sm:px-3`}
                 />
                 <Button
                   variant="ghost"

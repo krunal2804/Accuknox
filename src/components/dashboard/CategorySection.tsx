@@ -19,27 +19,32 @@ export function CategorySection({ category, index }: { category: Category; index
       aria-labelledby={`${category.id}-title`}
       className="scroll-mt-24 overflow-hidden rounded-lg border border-line bg-card shadow-sm"
     >
-      <div className={`flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-line px-4 py-3 sm:px-5 ${accent.wash}`}>
-        <span className={`grid size-9 shrink-0 place-items-center rounded-md ${accent.tile} ${accent.text}`}>
+      <div className={`flex items-center gap-3 border-b border-line px-3 py-3 sm:px-5 ${accent.wash}`}>
+        <span className={`grid size-8 shrink-0 place-items-center rounded-md sm:size-9 ${accent.tile} ${accent.text}`}>
           <CategoryIcon name={category.icon} className="size-[18px]" />
         </span>
-        <div className="mr-auto min-w-0">
+        <div className="min-w-0 flex-1">
           <h2 id={`${category.id}-title`} className="flex items-center gap-2 text-[15px] font-semibold">
-            {category.name}
-            <span className="rounded-full bg-card px-2 py-px text-xs font-medium text-muted tabular-nums ring-1 ring-line">
+            <span className="truncate">{category.name}</span>
+            <span className="shrink-0 rounded-full bg-card px-2 py-px text-xs font-medium text-muted tabular-nums ring-1 ring-line">
               {visibleWidgets.length}
             </span>
           </h2>
-          {category.description && <p className="text-[13px] text-muted">{category.description}</p>}
+          {category.description && <p className="truncate text-[13px] text-muted">{category.description}</p>}
         </div>
-        {hiddenCount > 0 && <span className="text-xs text-subtle">{hiddenCount} hidden</span>}
-        <Button size="sm" onClick={() => openDrawer(category.id)}>
+        {hiddenCount > 0 && <span className="shrink-0 text-xs text-subtle max-sm:hidden">{hiddenCount} hidden</span>}
+        <Button
+          size="sm"
+          onClick={() => openDrawer(category.id)}
+          aria-label={`Manage ${category.name} widgets`}
+          className="max-sm:size-8 max-sm:px-0"
+        >
           <SlidersHorizontal className="size-3.5" aria-hidden="true" />
-          Manage
+          <span className="max-sm:hidden">Manage</span>
         </Button>
       </div>
 
-      <div className="grid gap-4 p-4 sm:p-5 md:grid-cols-2 xl:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 p-3 sm:gap-4 sm:p-5 md:grid-cols-2 xl:grid-cols-3">
         {visibleWidgets.map((widget) => (
           <WidgetCard key={widget.id} categoryId={category.id} widget={widget} />
         ))}

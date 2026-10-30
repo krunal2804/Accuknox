@@ -32,7 +32,7 @@ export default function App() {
       <div className="flex min-w-0 flex-1 flex-col">
         <TopBar />
 
-        <main className="mx-auto flex w-full max-w-[1600px] flex-1 flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
+        <main className="mx-auto flex w-full max-w-[1600px] flex-1 flex-col gap-5 px-3 py-5 sm:gap-6 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
           <PageHeader />
 
           {searching ? (
@@ -55,7 +55,7 @@ export default function App() {
           )}
         </main>
 
-        <footer className="border-t border-line px-4 py-4 text-xs text-subtle sm:px-6 lg:px-8">
+        <footer className="border-t border-line px-3 py-4 text-center text-xs text-subtle sm:px-6 sm:text-left lg:px-8">
           © {YEAR} Krunal Parikh. All rights reserved.
         </footer>
       </div>

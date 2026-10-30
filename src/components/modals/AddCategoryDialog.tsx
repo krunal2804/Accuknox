@@ -48,7 +48,7 @@ function AddCategoryForm({ onDone }: { onDone: () => void }) {
         onClose={onDone}
       />
 
-      <div className="grid gap-4 overflow-y-auto px-6 py-5">
+      <div className="grid grid-cols-1 gap-4 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5">
         <label className="grid gap-1.5">
           <span className={labelClass}>
             Category name <span className="text-danger-fg">*</span>

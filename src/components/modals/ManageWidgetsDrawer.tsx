@@ -56,7 +56,7 @@ function DrawerContent({ initialCategoryId, onDone }: { initialCategoryId: strin
         onClose={onDone}
       />
 
-      <div role="tablist" aria-label="Categories" className="flex flex-wrap gap-x-5 border-b border-line px-6">
+      <div role="tablist" aria-label="Categories" className="flex flex-wrap gap-x-5 border-b border-line px-4 sm:px-6">
         {categories.map((category) => {
           const selected = category.id === active?.id
           return (
@@ -82,7 +82,7 @@ function DrawerContent({ initialCategoryId, onDone }: { initialCategoryId: strin
         id="drawer-panel"
         role="tabpanel"
         aria-labelledby={active ? `tab-${active.id}` : undefined}
-        className="flex-1 overflow-y-auto px-6 py-5"
+        className="flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5"
       >
         {active && (
           <p className="mb-3 text-xs font-medium tracking-wide text-subtle uppercase">

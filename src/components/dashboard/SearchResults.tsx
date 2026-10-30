@@ -42,7 +42,7 @@ export function SearchResults() {
           <p className="text-xs text-subtle">Try a different widget or category name.</p>
         </div>
       ) : (
-        <div className="grid gap-4 p-4 sm:p-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 p-3 sm:gap-4 sm:p-5 md:grid-cols-2 xl:grid-cols-3">
           {results.map(({ category, widget }) => (
             <WidgetCard key={widget.id} categoryId={category.id} widget={widget} categoryName={category.name} />
           ))}

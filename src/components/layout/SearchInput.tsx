@@ -28,7 +28,7 @@ export function SearchInput({ className = '' }: { className?: string }) {
           <X className="size-3.5" />
         </button>
       ) : (
-        <kbd className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 rounded border border-line bg-card px-1.5 py-px font-sans text-[11px] font-medium text-subtle peer-focus:hidden">
+        <kbd className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 rounded border border-line bg-card px-1.5 py-px font-sans text-[11px] font-medium text-subtle peer-focus:hidden max-sm:hidden">
           Ctrl K
         </kbd>
       )}

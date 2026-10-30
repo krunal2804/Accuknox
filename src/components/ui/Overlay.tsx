@@ -71,7 +71,7 @@ export function Overlay({ open, onClose, variant = 'dialog', labelledBy, classNa
   return createPortal(
     <div
       className={`fixed inset-0 z-50 flex ${
-        variant === 'drawer' ? 'justify-end' : 'items-center justify-center p-4'
+        variant === 'drawer' ? 'justify-end' : 'items-end justify-center sm:items-center sm:p-4'
       }`}
     >
       <div
@@ -87,7 +87,8 @@ export function Overlay({ open, onClose, variant = 'dialog', labelledBy, classNa
         className={`relative flex flex-col border-line bg-card shadow-2xl ${
           variant === 'drawer'
             ? 'h-full w-full max-w-md animate-slide-in-right border-l'
-            : 'max-h-[calc(100vh-2rem)] w-full max-w-lg animate-pop-in overflow-hidden rounded-xl border'
+            : // Bottom sheet on phones, centred card from `sm` up.
+              'max-h-[92dvh] w-full max-w-lg animate-sheet-up overflow-hidden rounded-t-2xl border sm:max-h-[calc(100dvh-2rem)] sm:animate-pop-in sm:rounded-xl'
         } ${className}`}
       >
         {children}
@@ -100,7 +101,7 @@ export function Overlay({ open, onClose, variant = 'dialog', labelledBy, classNa
 /** Standard header row for dialogs and drawers. */
 export function OverlayHeader({ id, title, subtitle, onClose }: { id: string; title: string; subtitle?: string; onClose: () => void }) {
   return (
-    <div className="flex items-start gap-4 border-b border-line px-6 py-4">
+    <div className="flex items-start gap-4 border-b border-line px-4 py-4 sm:px-6">
       <div className="min-w-0 flex-1">
         <h2 id={id} className="text-base font-semibold">
           {title}
@@ -117,7 +118,7 @@ export function OverlayHeader({ id, title, subtitle, onClose }: { id: string; ti
 /** Standard footer row (actions right-aligned). */
 export function OverlayFooter({ children }: { children: ReactNode }) {
   return (
-    <div className="flex items-center justify-end gap-2 border-t border-line bg-card-inner px-6 py-3">
+    <div className="flex items-center justify-end gap-2 border-t border-line bg-card-inner px-4 py-3 max-sm:[&>button]:flex-1 sm:px-6">
       {children}
     </div>
   )
